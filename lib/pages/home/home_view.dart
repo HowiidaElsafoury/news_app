@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:news_app/models/category_model.dart';
+import 'package:news_app/pages/category_view.dart';
 import 'package:news_app/widgets/custom_drawer.dart';
 
 import '../../widgets/category_item.dart';
@@ -14,7 +15,14 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  List<CategoryModel> categories = [
+  List<CategoryModel> categories = [];
+  CategoryModel? selectedCategory;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedCategory= null;
+    categories=[
     CategoryModel(
       categoryId: "sports",
       categoryTitle: "Sports",
@@ -22,37 +30,51 @@ class _HomeViewState extends State<HomeView> {
       categoryColor: const Color(0xFFC91C22),
     ),
     CategoryModel(
-      categoryId: "politics",
-      categoryTitle: "Politics",
-      categoryImage: "assets/images/Politics.png",
-      categoryColor: const Color(0xFF003E90),
+    categoryId: "politics",
+    categoryTitle: "Politics",
+    categoryImage: "assets/images/Politics.png",
+    categoryColor: const Color(0xFF003E90),
     ),
     CategoryModel(
-      categoryId: "health",
-      categoryTitle: "Health",
-      categoryImage: "assets/images/health@3x.png",
-      categoryColor: const Color(0xFFED1E79),
+    categoryId: "health",
+    categoryTitle: "Health",
+    categoryImage: "assets/images/health@3x.png",
+    categoryColor: const Color(0xFFED1E79),
     ),
     CategoryModel(
-      categoryId: "bussines",
-      categoryTitle: "Bussines",
-      categoryImage: "assets/images/bussines.png",
-      categoryColor: const Color(0xFFCF7E48),
+    categoryId: "bussines",
+    categoryTitle: "Bussines",
+    categoryImage: "assets/images/bussines.png",
+    categoryColor: const Color(0xFFCF7E48),
     ),
     CategoryModel(
-      categoryId: "environment",
-      categoryTitle: "Environment",
-      categoryImage: "assets/images/environment.png",
-      categoryColor: const Color(0xFF4882CF),
+    categoryId: "environment",
+    categoryTitle: "Environment",
+    categoryImage: "assets/images/environment.png",
+    categoryColor: const Color(0xFF4882CF),
     ),
     CategoryModel(
-      categoryId: "science",
-      categoryTitle: "Science",
-      categoryImage: "assets/images/science@3x.png",
-      categoryColor: const Color(0xFFF2D352),
+    categoryId: "science",
+    categoryTitle: "Science",
+    categoryImage: "assets/images/science@3x.png",
+    categoryColor: const Color(0xFFF2D352),
     ),
-  ];
+    ];
+  }
+  onSelectedCategoryItem(CategoryModel categoryModel) {
 
+
+    setState(() {
+      selectedCategory = categoryModel;
+    });
+  }
+  onDrawerCategoryClicked(){
+    Navigator.pop(context);
+    selectedCategory= null;
+    setState(() {
+
+    });
+  }
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
@@ -98,7 +120,9 @@ class _HomeViewState extends State<HomeView> {
                     itemBuilder: (context, index) => CategoryItem(
                       categoryModel: categories[index],
                       index: index,
-                      onSelectedItem: onSelectedCategoryItem,
+                      onSelectedItem: (){
+                        onSelectedCategoryItem(categories[index]);
+                      },
                     ),
                     itemCount: categories.length,
                   ),
@@ -106,28 +130,13 @@ class _HomeViewState extends State<HomeView> {
               )
             ],
           ),
-        ): Container(child: Text("you clicked me"),),
+        ): CategoryView(selected:selectedCategory ,),
       ),
     );
   }
 
-  CategoryModel? selectedCategory;
-
-  onSelectedCategoryItem(CategoryModel categoryModel) {
 
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {
-        selectedCategory = categoryModel;
-      });
-    });
-  }
-  onDrawerCategoryClicked(){
-    Navigator.pop(context);
-    selectedCategory= null;
-    setState(() {
 
-    });
-  }
 }
 

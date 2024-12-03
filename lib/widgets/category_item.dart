@@ -6,12 +6,12 @@ class CategoryItem extends StatelessWidget {
       {super.key, required this.categoryModel, required this.index, required this.onSelectedItem});
   final CategoryModel categoryModel;
   final int index;
-  final Function onSelectedItem;
+  final VoidCallback? onSelectedItem;
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     return GestureDetector(
-      onTap: onSelectedItem(categoryModel),
+      onTap: onSelectedItem,
       child: Container(
         decoration: BoxDecoration(
           color: categoryModel.categoryColor,
