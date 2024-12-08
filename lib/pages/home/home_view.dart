@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:news_app/models/category_model.dart';
-import 'package:news_app/pages/category_view.dart';
+import 'package:news_app/pages/news_view.dart';
 import 'package:news_app/widgets/custom_drawer.dart';
 
 import '../../widgets/category_item.dart';
@@ -130,7 +130,7 @@ class _HomeViewState extends State<HomeView> {
               )
             ],
           ),
-        ): CategoryView(selected:selectedCategory ,),
+        ): NewsView(categoryModel:   selectedCategory! ,),
       ),
     );
   }

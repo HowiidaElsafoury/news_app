@@ -3,41 +3,41 @@ import 'package:flutter/material.dart';
 import 'package:news_app/models/article_model.dart';
 
 class ArticleView extends StatelessWidget {
-  Articles articleModel;
+  Articles articles;
 
-  ArticleView(this.articleModel);
+  ArticleView(this.articles);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
-            child: Image.network(articleModel.urlToImage ??
+            child: Image.network(articles.urlToImage ??
                 "https://www.istockphoto.com/vector/image-preview-icon-picture-placeholder-for-website-or-ui-ux-design-vector-gm1222357475-358652058"),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 4.0),
             child: Text(
-              articleModel.source?.name ?? "",
-              style: TextStyle(color: Color(0xFF79828B), fontSize: 12),
+              articles.source?.name ?? "",
+              style: const TextStyle(color: Color(0xFF79828B), fontSize: 12),
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 4.0),
             child: Text(
-              articleModel.title ?? "",
-              style: TextStyle( fontSize: 16),
+              articles.title ?? "",
+              style: const TextStyle( fontSize: 16),
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 4.0),
             child: Text(
-              articleModel.publishedAt ?? "",
-              style: TextStyle(color: Color(0xFF79828B), fontSize: 14),
+              articles.publishedAt ?? "",
+              style: const TextStyle(color: Color(0xFF79828B), fontSize: 14),
               textAlign: TextAlign.end,
             ),
           )
