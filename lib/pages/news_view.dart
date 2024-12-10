@@ -2,30 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:news_app/core/network_layer/api_manager.dart';
 import 'package:news_app/models/category_model.dart';
 import 'package:news_app/models/source_model.dart';
-import 'package:news_app/pages/tab_bar_list_view.dart';
+import 'package:news_app/pages/news_details.dart';
 
 class CategoryView extends StatefulWidget {
-  CategoryView({super.key, required this.selected});
-  CategoryModel? selected;
+  CategoryView({super.key, required this.categoryModel});
+  CategoryModel categoryModel;
 
   @override
   State<CategoryView> createState() => _CategoryViewState();
 }
 
 class _CategoryViewState extends State<CategoryView> {
-  late Future<SourceModel> fetchSources;
-  @override
-  void initState() {
-    fetchSources = ApiManager.fetchSources(widget.selected!.categoryId);
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12.0),
       child: FutureBuilder<SourceModel>(
-        future: fetchSources,
+        future: ApiManager.fetchSources(widget.categoryModel.categoryId),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Column(
@@ -33,7 +27,7 @@ class _CategoryViewState extends State<CategoryView> {
                 Text("${snapshot.error}"),
                 IconButton(
                   onPressed: () {
-                    fetchSources;
+                    ApiManager.fetchSources(widget.categoryModel.categoryId);;
                   },
                   icon: const Icon(Icons.refresh_outlined),
                 ),
@@ -46,7 +40,7 @@ class _CategoryViewState extends State<CategoryView> {
             );
           } else {
             SourceModel? source = snapshot.data;
-            return TabBarListView(source!);
+            return NewsDetails(widget.categoryModel);
           }
         },
       ),
